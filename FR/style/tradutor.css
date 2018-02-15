@@ -1,0 +1,18 @@
+.leftDiv {
+    background-color: #3498db;
+    color: white;
+    width: 50%;
+    float: left;
+}
+
+.rightDiv {
+    background-color: white;
+    width: 50%;
+    float: right;
+}
+
+.word {
+    height: 25pt;
+    padding: 5pt;
+    border: 5pt transparent;
+}
