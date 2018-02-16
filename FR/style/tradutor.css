@@ -1,18 +1,37 @@
 .leftDiv {
     background-color: #3498db;
     color: white;
-    width: 50%;
-    float: left;
 }
 
 .rightDiv {
     background-color: white;
-    width: 50%;
-    float: right;
 }
 
+.row {
+    margin-top: 15pt;
+
+}
+
+#education {
+    margin-top: -30pt;
+    margin-left: 25pt;
+    margin-right: 25pt;
+
+}
 .word {
+    font-size: larger;
+    font-family: Roboto;
     height: 25pt;
     padding: 5pt;
     border: 5pt transparent;
+
 }
+
+body {
+    font-family: Roboto;
+
+}
+
+
+
+

@@ -12,7 +12,6 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="../libs/font-awesome/css/font-awesome.min.css">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
     <meta name="keywords" content="iOS,Developer,Swift,Objective-C,Scrum,Xcode,Machine Learning,Neural Networks,Python,Matlab,Natural language,POS Tagging,Probabilistic Graphical Models, Probabilistic, Graphical, Models, CRF, Conditional Random Fields">
     <meta name="description" content="I'm an iOS developer and designer who loves to learn about new mobile and web technologies. I combine my Computer Science studies in Neural Networks and Probabilistic graphical models with developing iOS apps at Apple Developer Academy - Brazil"/>
@@ -24,9 +23,59 @@
 <div id="experience" class="background-alt">
 
     <h2 class="heading"> Francês - Português</h2><br>
-    <input type="button" class="btn-rounded-white" value="Nova Palabra" style="align-content: center">
-    <br>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        New Word
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form>
+                        <div class="form-group">
+                            <label for="original">Original</label>
+                            <input type="text" class="form-control" id="original" aria-describedby="emailHelp" placeholder="Enter Original">
+                            <small id="emailHelp" class="form-text text-muted">In French</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="translation">Translation</label>
+                            <input type="text" class="form-control" id="translation" placeholder="Enter Translation">
+                            <small id="translationHelp" class="form-text text-muted">In Portuguese</small>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Example select</label>
+                            <select class="form-control" id="type">
+                                <option>Verb</option>
+                                <option>Noun</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" id="save" class="btn btn-primary" data-dismiss="modal">Save</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="education">
 
 </div>
 
@@ -53,44 +102,58 @@
 
         var starCountRef = firebase.database().ref('Fr/Words');
 
+        var original = document.querySelector("#original");
+        var translation = document.querySelector("#translation");
+        var type = document.querySelector("#type");
+
+        var button = document.querySelector("#save");
+
+        button.addEventListener("click", function() {
+
+            const originalText = original.value;
+            const translationText = translation.value;
+
+            starCountRef.push().set({
+                original: originalText,
+                translation: translationText,
+                type: type.value
+            });
+
+        })
+
         starCountRef.on('child_added', function(snapshot) {
 
             var words = snapshot.val();
 
-            for (var word in words) {
+            console.log(words)
 
-                // <div class="container">
-                //     <div class="row">
-                //         <div class="col-md-4">
-                //             <h2 class="heading">About Me</h2>
-                //         </div>
-                //         <div class="col-md-8">
-                //             <p>
-                //                 I'm an iOS developer and designer who loves to learn about new mobile and web technologies. I combine my Computer Science studies in Neural Networks and Probabilistic graphical models with developing iOS apps at Apple Developer Academy - Brazil.
-                //             </p>
-                //         </div>
-                //     </div>
-                // </div>
 
-                var container = document.createElement('div'); container.className = 'container';
-                var row = document.createElement('div'); row.className = 'row project shadow-large';
+                // var container = document.createElement('div'); container.className = 'container containerDiv';
+                var row = document.createElement('div'); row.className = 'row shadow-large';
                 var leftDiv = document.createElement('div');
-                leftDiv.className = "col pull-left leftDiv word";
+                leftDiv.className = "col-md-6 col-sm-6 push-left leftDiv word";
                 var rightDiv = document.createElement('div');
-                rightDiv.className = "col pull-right rightDiv word";
+                rightDiv.className = "col-md-6 col-sm-6 push-right rightDiv word";
 
-                leftDiv.innerHTML = words[word].original;
-                rightDiv.innerHTML = words[word].translation;
+                leftDiv.innerHTML = words.original;
+                rightDiv.innerHTML = words.translation;
                 row.appendChild(leftDiv);
                 row.appendChild(rightDiv);
-                document.getElementById('experience').appendChild(row);
-            }
+                document.getElementById('education').appendChild(row);
 
 
         });
 
     </script>
 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<link rel="stylesheet" href="../libs/font-awesome/css/font-awesome.min.css">
 
 
 </body>
