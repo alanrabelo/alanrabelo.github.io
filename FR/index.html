@@ -33,7 +33,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Contribua com uma palavra nova</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -44,26 +44,29 @@
                     <form>
                         <div class="form-group">
                             <label for="original">Original</label>
-                            <input type="text" class="form-control" id="original" aria-describedby="emailHelp" placeholder="Enter Original">
-                            <small id="emailHelp" class="form-text text-muted">In French</small>
+                            <input type="text" class="form-control" id="original" aria-describedby="emailHelp" placeholder="Digite a palavra original" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid city.
+                            </div>
+                            <small id="emailHelp" class="form-text text-muted">Em Francês</small>
                         </div>
                         <div class="form-group">
-                            <label for="translation">Translation</label>
-                            <input type="text" class="form-control" id="translation" placeholder="Enter Translation">
-                            <small id="translationHelp" class="form-text text-muted">In Portuguese</small>
+                            <label for="translation">Tradução</label>
+                            <input type="text" class="form-control" id="translation" placeholder="Digite a Tradução" required>
+                            <small id="translationHelp" class="form-text text-muted">Em Português</small>
 
                         </div>
 
                         <div class="form-group">
-                            <label for="type">Example select</label>
+                            <label for="type">Escolha uma categoria</label>
                             <select class="form-control" id="type">
-                                <option>Verb</option>
-                                <option>Noun</option>
-                                <option>Other</option>
+                                <option>Verbo</option>
+                                <option>Substantivo</option>
+                                <option>Outros</option>
                             </select>
                         </div>
 
-                        <button type="submit" id="save" class="btn btn-primary" data-dismiss="modal">Save</button>
+                        <button type="submit" id="save" class="btn btn-primary" data-dismiss="modal">Salvar</button>
 
                     </form>
 
@@ -113,6 +116,10 @@
             const originalText = original.value;
             const translationText = translation.value;
 
+            if (originalText == "" || translationText == "") {
+                return
+            }
+
             starCountRef.push().set({
                 original: originalText,
                 translation: translationText,
@@ -124,12 +131,12 @@
         starCountRef.on('child_added', function(snapshot) {
 
             var words = snapshot.val();
-
             console.log(words)
 
 
                 // var container = document.createElement('div'); container.className = 'container containerDiv';
                 var row = document.createElement('div'); row.className = 'row shadow-large';
+                row.id = words.original
                 var leftDiv = document.createElement('div');
                 leftDiv.className = "col-md-6 col-sm-6 push-left leftDiv word";
                 var rightDiv = document.createElement('div');
@@ -141,6 +148,14 @@
                 row.appendChild(rightDiv);
                 document.getElementById('education').appendChild(row);
 
+        });
+
+        starCountRef.on('child_removed', function(snapshot) {
+
+            var words = snapshot.val();
+            console.log(words)
+
+            document.getElementById(words.original).remove();
 
         });
 
